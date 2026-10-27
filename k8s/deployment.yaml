@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: invint
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: invint
+
+  template:
+    metadata:
+      labels:
+        app: invint
+
+    spec:
+      imagePullSecrets:
+      - name: acr-secret
+      containers:
+      - name: invint
+        image: invintellience1.azurecr.io/invint:v1
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: invint-secrets
+        ports:
+        - containerPort: 8000
