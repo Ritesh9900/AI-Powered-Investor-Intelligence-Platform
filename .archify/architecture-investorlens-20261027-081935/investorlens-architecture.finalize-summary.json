@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "E:\\AI-Powered-Investor-Intelligence-Platform\\.archify\\architecture-investorlens-20261027-081935\\candidate.json",
+    "sha256": "8b0cae5dfc9a19d0d331d59dde1484a207679f42a639d854047f5f08439cb2ac",
+    "bytes": 6237
+  },
+  "artifact": {
+    "path": "E:\\AI-Powered-Investor-Intelligence-Platform\\.archify\\architecture-investorlens-20261027-081935\\investorlens-architecture.html",
+    "sha256": "8db0b173f5be8c6d5c4541cf410213fd7c9849359c11f0553fc9965523ebcec1",
+    "bytes": 864046
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "E:\\AI-Powered-Investor-Intelligence-Platform\\.archify\\architecture-investorlens-20261027-081935\\investorlens-architecture.finalize.json",
+    "summaryReceipt": "E:\\AI-Powered-Investor-Intelligence-Platform\\.archify\\architecture-investorlens-20261027-081935\\investorlens-architecture.finalize-summary.json",
+    "browserCheckReceipt": "E:\\AI-Powered-Investor-Intelligence-Platform\\.archify\\architecture-investorlens-20261027-081935\\investorlens-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-27T02:50:52.901Z",
+    "source": "network",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4654,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

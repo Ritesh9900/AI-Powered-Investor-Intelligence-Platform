@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "ab5b5c8f-2381-400a-9104-fcdc07cde457",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "E:\\AI-Powered-Investor-Intelligence-Platform\\.archify\\architecture-investorlens-20261027-081935\\candidate.json",
+  "output": "E:\\AI-Powered-Investor-Intelligence-Platform\\.archify\\architecture-investorlens-20261027-081935\\investorlens-architecture.html",
+  "specification": {
+    "sha256": "8b0cae5dfc9a19d0d331d59dde1484a207679f42a639d854047f5f08439cb2ac",
+    "bytes": 6237
+  },
+  "artifact": {
+    "sha256": "8db0b173f5be8c6d5c4541cf410213fd7c9849359c11f0553fc9965523ebcec1",
+    "bytes": 864046
+  }
+}

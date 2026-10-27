@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "InvestorLens System Architecture",
+    "output": ".archify/architecture-investorlens-20261027-081935/investorlens-architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/Ritesh9900/AI-Powered-Investor-Intelligence-Platform",
+      "provider": "github",
+      "revision": "71a088a48edd887940950ec1e1cf237e389e9dfe"
+    }
+  },
+  "components": [
+    {
+      "id": "clients",
+      "type": "external",
+      "label": "Investors & Analysts",
+      "sublabel": "Web Browser / UI",
+      "icon": "person",
+      "pos": [40, 180],
+      "size": [130, 60]
+    },
+    {
+      "id": "github",
+      "type": "external",
+      "label": "GitHub Actions",
+      "sublabel": "CI/CD Pipeline",
+      "brand": "github-actions",
+      "pos": [40, 40],
+      "size": [130, 60],
+      "sources": [
+        {
+          "path": ".github/workflows/deploy.yaml",
+          "line": 1,
+          "end_line": 40,
+          "label": "CI/CD workflow"
+        }
+      ]
+    },
+    {
+      "id": "lb",
+      "type": "cloud",
+      "label": "Azure Load Balancer",
+      "sublabel": "Public IP :80",
+      "icon": "cloud",
+      "pos": [240, 180],
+      "size": [140, 60],
+      "sources": [
+        {
+          "path": "k8s/service.yaml",
+          "line": 1,
+          "end_line": 16,
+          "label": "Service spec"
+        }
+      ]
+    },
+    {
+      "id": "acr",
+      "type": "cloud",
+      "label": "Azure Container Reg",
+      "sublabel": "ACR: invint:v1",
+      "brand": "docker",
+      "pos": [240, 40],
+      "size": [140, 60],
+      "sources": [
+        {
+          "path": "k8s/deployment.yaml",
+          "line": 20,
+          "end_line": 25,
+          "label": "ACR image"
+        }
+      ]
+    },
+    {
+      "id": "fastapi",
+      "type": "backend",
+      "label": "InvestorLens API",
+      "sublabel": "FastAPI / Uvicorn",
+      "brand": "fastapi",
+      "pos": [450, 180],
+      "size": [144, 60],
+      "sources": [
+        {
+          "path": "app.py",
+          "line": 17,
+          "end_line": 45,
+          "label": "FastAPI App"
+        }
+      ]
+    },
+    {
+      "id": "rag",
+      "type": "backend",
+      "label": "Hybrid RAG Engine",
+      "sublabel": "Semantic Retrieval",
+      "brand": "python",
+      "pos": [680, 180],
+      "size": [150, 60],
+      "sources": [
+        {
+          "path": "routes/chat.py",
+          "line": 1,
+          "end_line": 40,
+          "label": "RAG router"
+        }
+      ]
+    },
+    {
+      "id": "openai",
+      "type": "cloud",
+      "label": "Azure OpenAI",
+      "sublabel": "GPT-4o & Embeddings",
+      "brand": "openai",
+      "pos": [910, 100],
+      "size": [144, 60],
+      "sources": [
+        {
+          "path": "routes/chat.py",
+          "line": 29,
+          "end_line": 35,
+          "label": "Embeddings"
+        }
+      ]
+    },
+    {
+      "id": "search",
+      "type": "database",
+      "label": "Azure AI Search",
+      "sublabel": "Vector & Hybrid Index",
+      "icon": "database",
+      "pos": [910, 260],
+      "size": [144, 60],
+      "sources": [
+        {
+          "path": "routes/chat.py",
+          "line": 23,
+          "end_line": 27,
+          "label": "VectorStore"
+        }
+      ]
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "Azure PostgreSQL",
+      "sublabel": "Financial KPIs & Metrics",
+      "brand": "postgresql",
+      "pos": [450, 330],
+      "size": [144, 60],
+      "sources": [
+        {
+          "path": "database/metrics.py",
+          "line": 1,
+          "end_line": 30,
+          "label": "Metrics DB"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Azure Cloud (rg-investor-intell)",
+      "wraps": ["lb", "acr", "fastapi", "rag", "openai", "search", "postgres"],
+      "pad": 20
+    },
+    {
+      "kind": "security-group",
+      "label": "Azure Kubernetes Service (inv-intelligence-aks)",
+      "wraps": ["fastapi", "rag"],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "ci-push",
+      "from": "github",
+      "to": "acr",
+      "label": "docker push",
+      "variant": "dashed"
+    },
+    {
+      "id": "acr-pull",
+      "from": "acr",
+      "to": "fastapi",
+      "label": "image pull",
+      "variant": "dashed"
+    },
+    {
+      "id": "client-req",
+      "from": "clients",
+      "to": "lb",
+      "label": "HTTP :80",
+      "variant": "emphasis"
+    },
+    {
+      "id": "lb-proxy",
+      "from": "lb",
+      "to": "fastapi",
+      "label": "proxy :8000",
+      "variant": "emphasis"
+    },
+    {
+      "id": "api-rag",
+      "from": "fastapi",
+      "to": "rag",
+      "label": "chat & extract",
+      "variant": "emphasis"
+    },
+    {
+      "id": "rag-openai",
+      "from": "rag",
+      "to": "openai",
+      "label": "inference",
+      "variant": "emphasis"
+    },
+    {
+      "id": "rag-search",
+      "from": "rag",
+      "to": "search",
+      "label": "vector search",
+      "variant": "emphasis"
+    },
+    {
+      "id": "api-postgres",
+      "from": "fastapi",
+      "to": "postgres",
+      "label": "SQL :5432",
+      "route": "straight",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Ingress & Edge Serving",
+      "items": [
+        "Public HTTP :80 terminates on Azure Load Balancer (20.12.249.95)",
+        "Reverse proxies to FastAPI container running inside AKS cluster",
+        "InvestorLens dynamic dashboard served with real-time analytics"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Hybrid RAG Intelligence",
+      "items": [
+        "Azure AI Search powers hybrid vector + keyword document retrieval",
+        "Azure OpenAI (GPT-4o) synthesizes answers and extracts structured KPIs",
+        "Embeddings generated with text-embedding-ada-002"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "State & Continuous Delivery",
+      "items": [
+        "Azure PostgreSQL flexible server stores historical financial metrics",
+        "GitHub Actions workflow automates test, build, and ACR push",
+        "Zero-downtime rolling deployment managed on AKS pod invint"
+      ]
+    }
+  ]
+}

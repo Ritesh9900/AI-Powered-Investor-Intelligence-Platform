@@ -92,6 +92,20 @@ python app.py
 
 ---
 
+## System Architecture
+
+The end-to-end architecture is modeled and compiled using [Archify](https://github.com/tt-a1i/archify):
+* **Interactive Architecture Diagram**: [.archify/investorlens-architecture.html](.archify/investorlens-architecture.html)
+* **Architecture Model Source**: [.archify/investorlens.architecture.json](.archify/investorlens.architecture.json)
+
+Key Subsystems:
+* **Edge & Ingress**: Azure Load Balancer routing public HTTP traffic to the InvestorLens FastAPI pod inside Azure Kubernetes Service (AKS).
+* **Hybrid RAG Engine**: Semantic document ingestion, hybrid vector + keyword search via Azure AI Search, and LLM inference/KPI extraction with Azure OpenAI (GPT-4o & text-embedding-ada-002).
+* **State & Persistence**: Financial KPI records and metric aggregations stored in Azure Database for PostgreSQL flexible server.
+* **CI/CD Automation**: GitHub Actions workflow automatically building Docker containers, pushing to Azure Container Registry (ACR), and rolling out deployments to AKS.
+
+---
+
 ## Technology Stack
 
 ### Backend
